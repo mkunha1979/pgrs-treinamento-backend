@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3001;
 
 const trilhaRoutes = require('./src/routes/trilhas');
 const moduloRoutes = require('./src/routes/modulos');
+const aulaRoutes = require('./src/routes/aulas');
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/trilhas', trilhaRoutes);
 app.use('/api/modulos', moduloRoutes);
+app.use('/api/aulas', aulaRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
