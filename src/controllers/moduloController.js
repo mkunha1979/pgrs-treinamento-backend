@@ -110,4 +110,37 @@ const excluir = async (req, res) => {
   }
 };
 
-module.exports = { criar, listarPorTrilha, buscarPorId, atualizar, excluir };
+// Alterar status do módulo
+const alterarStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const statusValidos = ['rascunho', 'publicado', 'arquivado'];
+    if (!statusValidos.includes(status)) {
+      return res.status(400).json({
+        erro: `Status inválido. Use: ${statusValidos.join(', ')}`
+      });
+    }
+
+    const resultado = await pool.query(
+      `UPDATE modulos SET status = $1, atualizado_em = NOW()
+       WHERE id = $2 RETURNING id, titulo, status`,
+      [status, id]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({ erro: 'Módulo não encontrado' });
+    }
+
+    res.json({
+      mensagem: `Módulo ${status} com sucesso`,
+      modulo: resultado.rows[0]
+    });
+  } catch (erro) {
+    console.error(erro);
+    res.status(500).json({ erro: 'Erro interno do servidor' });
+  }
+};
+
+module.exports = { criar, listarPorTrilha, buscarPorId, atualizar, excluir, alterarStatus };
