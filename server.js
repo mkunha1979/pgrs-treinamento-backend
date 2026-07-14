@@ -12,6 +12,7 @@ const trilhaRoutes = require('./src/routes/trilhas');
 const moduloRoutes = require('./src/routes/modulos');
 const aulaRoutes = require('./src/routes/aulas');
 const progressoRoutes = require('./src/routes/progresso');
+const dashboardRoutes = require('./src/routes/dashboard');
 
 app.use(cors());
 app.use(express.json());
@@ -23,6 +24,9 @@ app.use('/api/trilhas', trilhaRoutes);
 app.use('/api/modulos', moduloRoutes);
 app.use('/api/aulas', aulaRoutes);
 app.use('/api/progresso', progressoRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+
+
 
 // Health check
 app.get('/health', (req, res) => {
