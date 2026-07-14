@@ -14,6 +14,7 @@ const aulaRoutes = require('./src/routes/aulas');
 const progressoRoutes = require('./src/routes/progresso');
 const dashboardRoutes = require('./src/routes/dashboard');
 const certificadoRoutes = require('./src/routes/certificados');
+const gestorRoutes = require('./src/routes/gestor');
 
 app.use(cors());
 app.use(express.json());
@@ -27,7 +28,7 @@ app.use('/api/aulas', aulaRoutes);
 app.use('/api/progresso', progressoRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/certificados', certificadoRoutes);
-
+app.use('/api/gestor', gestorRoutes);
 
 
 // Health check
