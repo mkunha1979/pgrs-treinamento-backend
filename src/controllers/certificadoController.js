@@ -1,6 +1,7 @@
 const pool = require('../config/database');
 const PDFDocument = require('pdfkit');
 const crypto = require('crypto');
+const { registrarLog } = require('../utils/registrarLog');
 
 // Gerar código de validação único
 const gerarCodigo = () => {
@@ -64,6 +65,8 @@ const emitir = async (req, res) => {
         [usuario_id, trilha_id, codigo]
       );
     }
+
+    await registrarLog(usuario_id, 'CERTIFICADO_EMITIDO', { trilha_id });
 
     res.json({
       mensagem: 'Certificado disponível',

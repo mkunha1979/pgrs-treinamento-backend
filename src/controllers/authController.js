@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const pool = require('../config/database');
+const { registrarLog } = require('../utils/registrarLog');
 
 // Registrar novo usuário
 const registrar = async (req, res) => {
@@ -67,6 +68,8 @@ const login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '8h' }
     );
+
+    await registrarLog(usuario.id, 'LOGIN', { email: usuario.email });
 
     res.json({
       token,

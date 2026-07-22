@@ -1,4 +1,5 @@
 const pool = require('../config/database');
+const { registrarLog } = require('../utils/registrarLog');
 
 // Marcar aula como concluída
 const marcarConcluida = async (req, res) => {
@@ -21,6 +22,8 @@ const marcarConcluida = async (req, res) => {
        RETURNING *`,
       [usuario_id, aula_id]
     );
+
+    await registrarLog(usuario_id, 'AULA_CONCLUIDA', { aula_id });
 
     res.json({
       mensagem: 'Aula marcada como concluída',
