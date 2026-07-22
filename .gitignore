@@ -1,3 +1,6 @@
 node_modules/
 .env
 *.log
+# Arquivos de teste gerados localmente
+*.csv
+relatorio.pdf
