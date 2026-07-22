@@ -17,6 +17,7 @@ const certificadoRoutes = require('./src/routes/certificados');
 const gestorRoutes = require('./src/routes/gestor');
 const logRoutes = require('./src/routes/logs');
 const buscaRoutes = require('./src/routes/busca');
+const notificacaoRoutes = require('./src/routes/notificacoes');
 
 app.use(cors());
 app.use(express.json());
@@ -33,6 +34,7 @@ app.use('/api/certificados', certificadoRoutes);
 app.use('/api/gestor', gestorRoutes);
 app.use('/api/logs', logRoutes);
 app.use('/api/busca', buscaRoutes);
+app.use('/api/notificacoes', notificacaoRoutes);
 
 
 // Health check

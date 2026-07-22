@@ -1,4 +1,5 @@
 const pool = require('../config/database');
+const { notificarPorPerfil } = require('../utils/notificar');
 
 // Criar módulo dentro de uma trilha
 const criar = async (req, res) => {
@@ -131,6 +132,24 @@ const alterarStatus = async (req, res) => {
 
     if (resultado.rows.length === 0) {
       return res.status(404).json({ erro: 'Módulo não encontrado' });
+    }
+
+    // Se o módulo foi publicado, notifica os usuários da trilha
+    if (status === 'publicado') {
+      const info = await pool.query(
+        `SELECT m.titulo, t.titulo as trilha_titulo, t.perfil_alvo
+         FROM modulos m JOIN trilhas t ON t.id = m.trilha_id
+         WHERE m.id = $1`,
+        [id]
+      );
+      if (info.rows.length > 0) {
+        const dados = info.rows[0];
+        await notificarPorPerfil(
+          dados.perfil_alvo,
+          'Novo módulo disponível',
+          `O módulo "${dados.titulo}" foi adicionado à trilha "${dados.trilha_titulo}".`
+        );
+      }
     }
 
     res.json({
